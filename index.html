@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Columnetas</title>
+    <link rel="stylesheet" href="Vista/estilo.css">
+    <script>
+        function generarColumnetas() {
+            const cantidad = document.getElementById('cantidadColumnetas').value;
+            const container = document.getElementById('columnetasContainer');
+            container.innerHTML = ''; // Limpiar contenido previo
+
+            for (let i = 1; i <= cantidad; i++) {
+                const div = document.createElement('div');
+                div.innerHTML = `
+                    <h4>Columneta ${i}</h4>
+                    <label for="base${i}">Base (m): </label>
+                    <input type="number" id="base${i}" name="base[]" step="0.01" required><br>
+                    
+                    <label for="altura${i}">Altura (m): </label>
+                    <input type="number" id="altura${i}" name="altura[]" step="0.01" required><br>
+
+                    <label for="tipoAcero${i}">Tipo de acero: </label>
+                    <select id="tipoAcero${i}" name="tipoAcero[]" required>
+                        <option value="0.0127">0.0127</option>
+                        <option value="0.01904">0.01904</option>
+                        <option value="0.0254">0.0254</option>
+                        <option value="0.03174">0.03174</option>
+                        <option value="0.0381">0.0381</option>
+                        <option value="0.0508">0.0508</option>
+                    </select><br>
+
+                    <label for="cantidadAcero${i}">Cantidad de acero (kg): </label>
+                    <input type="number" id="cantidadAcero${i}" name="cantidadAcero[]" step="0.01" required><br><br>
+                `;
+                container.appendChild(div);
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Formulario para Columnetas</h2>
+    <form action="Controlador/procesar.php" method="POST">
+        <label for="cantidadColumnetas">Cantidad de columnetas: </label>
+        <input type="number" id="cantidadColumnetas" name="cantidadColumnetas" min="1" required onchange="generarColumnetas()">
+        <div id="columnetasContainer"></div>
+        <label for="pisos">Cantidad de pisos: </label>
+        <input type="number" id="pisos" name="pisos" min="1" required><br><br>
+        <input type="submit" value="Enviar">
+    </form>
+</body>
+</html>
